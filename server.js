@@ -30,29 +30,45 @@ app.get('/app/rpsls/', (req, res) => {
 });
 
 /*  https://dev.to/gathoni/express-req-params-req-query-and-req-body-4lpc was helpful 
-for understanding req.body, req.params, req.query
+    for understanding req.body, req.params, req.query
 */
 
-// using URLEncoded query parameters
+/*  using URLEncoded query parameters
+    using JSON body requests
+*/
 app.get('/app/rps/play/', (req, res) => {
-    if (req.query.shot) {
+    if (req.query.shot != undefined) {
         res.status(200).send(JSON.stringify(rps(req.query.shot)))
     }
     else {
         res.status(200).send(JSON.stringify(rps(req.body.shot)))
     }
-})
+});
 
-// using route parameters:
-// rps endpoint /app/rps/play/(rock|paper|scissors) 
-// returns {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
+/*  using URLEncoded query parameters
+    using JSON body requests
+*/
+app.get('/app/rpsls/play/', (req, res) => {
+    if (req.query.shot != undefined) {
+        res.status(200).send(JSON.stringify(rpsls(req.query.shot)))
+    }
+    else {
+        res.status(200).send(JSON.stringify(rpsls(req.body.shot)))
+    }
+});
+
+/*  using route parameters:
+    rps endpoint /app/rps/play/(rock|paper|scissors) 
+    returns {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
+*/
 app.get('/app/rps/play/:shot/', (req, res) => {
     res.status(200).send(JSON.stringify(rps(req.params.shot)))
 });
 
-// using route parameters:
-// rpsls endpoint /app/rpsls/play/(rock|paper|scissors|spock|lizard)
-// returns {"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
+/*  using route parameters:
+    rpsls endpoint /app/rpsls/play/(rock|paper|scissors|spock|lizard)
+    returns {"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
+*/
 app.get('/app/rpsls/play/:shot/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls(req.params.shot)))
 });
