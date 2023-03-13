@@ -27,17 +27,24 @@ app.get('/app/rpsls/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls()))
 });
 
+// using route parameters:
 // rps endpoint /app/rps/play/(rock|paper|scissors) 
 // returns {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
 app.get('/app/rps/play/:shot/', (req, res) => {
     res.status(200).send(JSON.stringify(rps(req.params.shot)))
 });
 
+// using route parameters:
 // rpsls endpoint /app/rpsls/play/(rock|paper|scissors|spock|lizard)
 // returns {"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
 app.get('/app/rpsls/play/:shot/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls(req.params.shot)))
-})
+});
+
+// default API endpoint that returns 404 NOT FOUND for any endpoints that are not defined
+app.get('*', (req, res) => {
+    res.status(404).send("404 NOT FOUND")
+});
 
 app.listen(port, () => {
 	console.log("Server listening on port " + port);
