@@ -6,7 +6,6 @@ import cors from "cors"
 const args = minimist(process.argv.slice(2));
 // if no port is given, default to port 5000
 const port = args.port || 5000
-
 const app = express()
 
 // use cors HTTP headers
@@ -29,39 +28,43 @@ app.get('/app/rpsls/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls()))
 });
 
+
 /*  https://dev.to/gathoni/express-req-params-req-query-and-req-body-4lpc was helpful 
     for understanding req.body, req.params, req.query
 */
 
-// using URLEncoded query parameters
+/*  following routes should return {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)",
+    "result":"(win|lose|tie)"}
+*/
+// using URLEncoded query parameters (req.query):
 app.get('/app/rps/play/', (req, res) => {
     res.status(200).send(JSON.stringify(rps(req.query.shot)))
 });
-// using JSON body requests
+// using JSON body requests (req.body):
 app.post('/app/rps/play/', (req, res) => {
     res.status(200).send(JSON.stringify(rps(req.body.shot)))
 })
 
-
-// using URLEncoded query parameters
+/*  following routes should return {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)",
+    "result":"(win|lose|tie)"}
+*/
+// using URLEncoded query parameters (req.query):
 app.get('/app/rpsls/play/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls(req.query.shot)))
 });
-// using JSON body requests
+// using JSON body requests (req.body):
 app.post('/app/rpsls/play/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls(req.body.shot)))
 })
 
-/*  using route parameters:
-    rps endpoint /app/rps/play/(rock|paper|scissors) 
+/*  using route parameters (req.params): 
     returns {"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
 */
 app.get('/app/rps/play/:shot/', (req, res) => {
     res.status(200).send(JSON.stringify(rps(req.params.shot)))
 });
 
-/*  using route parameters:
-    rpsls endpoint /app/rpsls/play/(rock|paper|scissors|spock|lizard)
+/*  using route parameters (req.params):
     returns {"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
 */
 app.get('/app/rpsls/play/:shot/', (req, res) => {
