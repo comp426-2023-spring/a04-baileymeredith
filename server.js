@@ -8,13 +8,15 @@ const args = minimist(process.argv.slice(2));
 const port = args.port || 5000
 
 const app = express()
+app.use(express.json());
+app.use(express.urlencoded());
 
 // use cors HTTP headers
 app.use(cors())
 
 // check endpoint that returns 200 OK
 app.get('/app/', (req, res) => {
-    res.sendStatus(200)
+    res.status(200).send("200 OK")
 });
 
 // rps endpoint returns {"player": "(rock|paper|scissors)""}
@@ -27,4 +29,12 @@ app.get('/app/rpsls/', (req, res) => {
     res.status(200).send(JSON.stringify(rpsls()))
 });
 
-app.listen(port)
+// plays rps game and accepts shots in form of URLEncoded or JSON
+// returns {"player": "(rock|paper|scissors)", "opponent": "(rock|paper|scissors)", "result": "(win|lose|tie)"}
+app.get('/app/rps/play/', (req, res) => {
+    
+});
+
+app.listen(port, () => {
+	console.log("Server listening on port " + port);
+})
