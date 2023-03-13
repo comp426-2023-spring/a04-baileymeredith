@@ -33,29 +33,24 @@ app.get('/app/rpsls/', (req, res) => {
     for understanding req.body, req.params, req.query
 */
 
-/*  using URLEncoded query parameters
-    using JSON body requests
-*/
+// using URLEncoded query parameters
 app.get('/app/rps/play/', (req, res) => {
-    if (req.query.shot != undefined) {
-        res.status(200).send(JSON.stringify(rps(req.query.shot)))
-    }
-    else {
-        res.status(200).send(JSON.stringify(rps(req.body.shot)))
-    }
+    res.status(200).send(JSON.stringify(rps(req.query.shot)))
 });
+// using JSON body requests
+app.post('/app/rps/play/', (req, res) => {
+    res.status(200).send(JSON.stringify(rps(req.body.shot)))
+})
 
-/*  using URLEncoded query parameters
-    using JSON body requests
-*/
+
+// using URLEncoded query parameters
 app.get('/app/rpsls/play/', (req, res) => {
-    if (req.query.shot != undefined) {
-        res.status(200).send(JSON.stringify(rpsls(req.query.shot)))
-    }
-    else {
-        res.status(200).send(JSON.stringify(rpsls(req.body.shot)))
-    }
+    res.status(200).send(JSON.stringify(rpsls(req.query.shot)))
 });
+// using JSON body requests
+app.post('/app/rpsls/play/', (req, res) => {
+    res.status(200).send(JSON.stringify(rpsls(req.body.shot)))
+})
 
 /*  using route parameters:
     rps endpoint /app/rps/play/(rock|paper|scissors) 
